@@ -35,13 +35,13 @@ def independence_test(df_test, column_value="speed", column_factor="city_id", al
     Kruskal_test = [kruskal(df_test[df_test[column_factor] == combination[0]][column_value].values,
                             df_test[df_test[column_factor] == combination[1]][column_value].values) for combination in
                     tuple_combinations]
-    Kruskal_pvalue = [round(x.pvalue, decimals) for x in Kruskal_test]
+    Kruskal_pvalue = [np.round(x.pvalue, decimals) for x in Kruskal_test]
     Kruskal_H = [x.statistic for x in Kruskal_test]
 
     ## if saphiro test is passed, we continue calculating Anova:
 
     if pvalue_saphiro > 0.05:
-        print("Saphiro test p-value: %s" % round(pvalue_saphiro, decimals))
+        print("Saphiro test p-value: %s" % np.round(pvalue_saphiro, decimals))
         print("Null hypothesis cannot be rejected. We asume residuals are normally distributed")
         ##Now let's check every possible combinatio to perform Bartlet test:
         Bartlett_test = [stats.bartlett(df_test[df_test[column_factor] == combination[0]][column_value],
@@ -69,7 +69,7 @@ def independence_test(df_test, column_value="speed", column_factor="city_id", al
 
 
     else:
-        print("Saphiro test p-value: %s" % round(pvalue_saphiro, 4))
+        print("Saphiro test p-value: %s" % np.round(pvalue_saphiro, 4))
         print("Null hypothesis rejected. We cannot asume residuals are normally distributed")
         print("Using kruskal wallis test")
 
